@@ -5,22 +5,30 @@ function signup(event){
       let lname = document.getElementById('lname').value  
       let email = document.getElementById('email').value  
       let password = document.getElementById('password').value  
-      if (!fname || !lname || !email || !password) {
-         return alert("You Need To Fill Up The Form"); 
-      }
-    let user = {
-                fname: fname,
-                lname: lname,
-                email: email,
-            password: password
-            }
- let userInfo = JSON.stringify(user);
-let getInfo =  JSON.parse(localStorage.getItem('user')) || [];
- getInfo.push(userInfo);
- localStorage.setItem(("user"), JSON.stringify(getInfo));
-            
- alert("Account Created!");
- window.location.replace('login.html')
+    const newUser = {
+      fname,
+      lname,
+      email,
+      password,  
+    };
+  let userData = localStorage.getItem("user-data");
+  userData = JSON.parse(userData)  
+console.log(userData);
+  if(!userData){
+    userData = []
+  }
+  const foundUserIndex = userData.findIndex(el => {
+    return el.email === email || el.password === password
+  })
+
+  if(foundUserIndex >= 0){
+    return alert("Email/Password alreay taken")
+    
+  }
+  userData.push(newUser)
+
+  localStorage.setItem("user-data", JSON.stringify(userData))
+  window.location.href = "login.html";
 }
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -33,18 +41,28 @@ let password, email
 password =   document.getElementById('password').value
 email =  document.getElementById('email').value 
 
-let stored_users = JSON.parse(localStorage.getItem('user'))
+let userData = localStorage.getItem("user-data")
+userData = JSON.parse(userData)
 
-console.log(stored_users.email);  // undefiend ata 
-
-
+if(!userData){
+  userData = [];
 }
 
+const foundUser = userData.find((el) => {
+  return el.email === email
+})
 
+if(!foundUser){
+  alert("User not Found")
+}else{
+  if(foundUser.password === password){
+    localStorage.setItem("logged-in-user", JSON.stringify(foundUser))
+    window.location.href = "cart.html"
+  }else{
+    alert("password Incorrect")
+  }
+}
 
-
-
-
-
+}
 
 

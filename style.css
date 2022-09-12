@@ -13,13 +13,22 @@ a{
     text-decoration: none;
     color: #fff;
 }
+.afaqStore{
+    border: 3px solid red;
+    padding: 8px;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: all .3s ease;
+}
+
 .navbar{
     background-color: purple;
     color: white;
     padding: 25px 60px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 60px;
 }
 .cart{
     background: white;
@@ -96,6 +105,10 @@ a{
     border-radius: 5px;
     display: inline-block;
     margin-top: 8px;
+}
+.loginF{
+    color: blue;
+    text-decoration: underline;
 }
 .checkout{
     margin: 10px 0;

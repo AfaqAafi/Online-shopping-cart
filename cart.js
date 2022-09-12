@@ -1,6 +1,7 @@
 let shoppingCart = document.getElementById('shopping-cart');
 let label = document.getElementById('label');
-let basket = JSON.parse(localStorage.getItem("data")) || [];
+let cartIconNav = document.getElementById('cartIconnav');
+basket = JSON.parse(localStorage.getItem("data")) || [];
 
 let calculation = ()=>{
     let cartIcon = document.getElementById('cartAmount');
@@ -9,8 +10,35 @@ let calculation = ()=>{
   }
   calculation();
 
-let generateCartItems = ()=>{
-    if(basket.length !== 0){
+  let logindata = localStorage.getItem("logged-in-user")
+  let signupdata = localStorage.getItem("user-data")
+  logindata = JSON.parse(logindata) || [];
+  // console.log(logindata);
+  signupdata = JSON.parse(signupdata);
+  // console.log(signupdata)
+ let searchi = signupdata.find((x) => x.email == logindata.email) 
+//  console.log(search);
+  
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//  let cartIconNavFunc = ()=>{
+  //   if(search !== undefined){
+    //      generateCartItems();
+    //   }
+    
+    //   else{
+      //     `<h1> Your are not Login!   </h1>`
+      //    return alert ("Your are not Login!")
+      //   }
+      //  }
+      // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      
+
+
+
+
+
+let generateCartItems = ()=>{  
+    if(basket.length !== 0 && searchi){
       return (shoppingCart.innerHTML = basket.map((x) =>{
        let{id, item} = x
       let search = shopItemsData.find((x) => {
@@ -40,6 +68,14 @@ let generateCartItems = ()=>{
 
         `
       }).join(""))
+      
+    }else if(basket.length !== 0 && searchi == undefined){
+      label.innerHTML = `
+        <h2>You Must have login first</h2>
+        <a href = "index.html"> 
+        <button class = "homeBtn">Back to home</button>
+        </a>`
+        return;   
     }
     else{
       shoppingCart.innerHTML = ``;
@@ -50,6 +86,8 @@ let generateCartItems = ()=>{
         </a>
       `  
     }
+  
+    
 }
 generateCartItems();
 
@@ -127,7 +165,7 @@ let clearCart = ()=>{
 
 
 let totalAmount = ()=>{
- if(basket.length !== 0){
+ if(basket.length !== 0 && searchi !== undefined){
  let amount = basket.map((x) => {      
   let{id, item} = x;
   let search = shopItemsData.find((y) => y.id == id)
@@ -149,7 +187,7 @@ totalAmount();
 
 let checkOut = ()=>{
   if(basket.length > 0){
-    basket = [];
+    basket = [];  
     generateCartItems();
     calculation();
    alert("Thanks for your purchase! Your deliery on the way...")
